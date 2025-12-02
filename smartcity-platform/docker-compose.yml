@@ -1,2 +1,89 @@
 version: '3.8'
-# TODO: Define services and orchestration in this file
+
+services:
+  # Service REST - Mobilité
+  service-mobilite:
+    build:
+      context: ./service-mobilite-rest
+      dockerfile: Dockerfile
+    container_name: mobilite-service
+    ports:
+      - "8081:8081"
+    networks:
+      - smartcity-network
+    environment:
+      - SERVER_PORT=8081
+
+  # Service SOAP - Qualité de l'air
+  service-qualite-air:
+    build:
+      context: ./service-qualite-air-soap
+      dockerfile: Dockerfile
+    container_name: qualiteair-service
+    ports:
+      - "8082:8082"
+    networks:
+      - smartcity-network
+    environment:
+      - SERVER_PORT=8082
+
+  # Service gRPC - Urgences
+  service-urgences:
+    build:
+      context: ./service-urgences-grpc
+      dockerfile: Dockerfile
+    container_name: urgences-service
+    ports:
+      - "50051:50051"
+    networks:
+      - smartcity-network
+
+  # Service GraphQL - Profils
+  service-profils:
+    build:
+      context: ./service-profils-graphql
+      dockerfile: Dockerfile
+    container_name: profils-service
+    ports:
+      - "4000:4000"
+    networks:
+      - smartcity-network
+
+  # Orchestrateur métier
+  orchestrateur:
+    build:
+      context: ./orchestrateur-metier
+      dockerfile: Dockerfile
+    container_name: orchestrateur-service
+    ports:
+      - "8080:8080"
+    networks:
+      - smartcity-network
+    depends_on:
+      - service-mobilite
+      - service-qualite-air
+      - service-urgences
+      - service-profils
+    environment:
+      - SERVER_PORT=8080
+      - MOBILITE_URL=http://service-mobilite:8081
+      - QUALITEAIR_URL=http://service-qualite-air:8082
+      - URGENCES_URL=service-urgences:50051
+      - PROFILS_URL=http://service-profils:4000
+
+  # Client Web
+  client-web:
+    build:
+      context: ./client-web
+      dockerfile: Dockerfile.client
+    container_name: client-web
+    ports:
+      - "3000:80"
+    networks:
+      - smartcity-network
+    depends_on:
+      - orchestrateur
+
+networks:
+  smartcity-network:
+    driver: bridge

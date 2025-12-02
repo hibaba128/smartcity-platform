@@ -1,14 +1,24 @@
-package main.java.com.smartcity.orchestrateur;
+package com.smartcity.orchestrateur;
 
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+
+@RestController
+@RequestMapping("/orchestrateur")
 public class OrchestrateurController {
 
-    // TODO: Coordinate business orchestrations across services
-    public void orchestrate() {
-        // TODO: Implement orchestration logic
+    public OrchestrateurController() {
+        // TODO: Constructor
     }
 
-    // TODO: Add health check
-    public void healthCheck() {
-        // TODO: Implement health check
+    @GetMapping("/planifier-trajet")
+    public void planifierTrajet(String zoneDepart, String zoneArrivee) {
+        // TODO: Orchestrate workflow: check air quality, suggest alternatives, show transport
+    }
+
+    @GetMapping("/envoyer-alertes")
+    public void envoyerAlertes(String typeAlerte) {
+        // TODO: Orchestrate emergency alerts workflow
     }
 }

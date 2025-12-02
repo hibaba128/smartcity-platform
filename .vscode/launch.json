@@ -1,0 +1,13 @@
+{
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "type": "java",
+      "name": "Launch Current File",
+      "request": "launch",
+      "mainClass": "${file}",
+      "projectName": "smartcity-platform",
+      "cwd": "${workspaceFolder}"
+    }
+  ]
+}

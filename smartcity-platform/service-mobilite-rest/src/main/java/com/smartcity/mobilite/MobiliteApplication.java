@@ -1,11 +1,13 @@
 package com.smartcity.mobilite;
 
+import org.springframework.boot.SpringApplication;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
+
+@SpringBootApplication
 public class MobiliteApplication {
 
-    // TODO: Initialize application
     public static void main(String[] args) {
-        // TODO: Start application
+        SpringApplication.run(MobiliteApplication.class, args);
+        // TODO: Initialize the Mobilite REST service
     }
-
-    // TODO: Add other lifecycle methods as needed
 }

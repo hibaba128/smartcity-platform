@@ -1,0 +1,13 @@
+{
+  "java.import.gradle.enabled": false,
+  "java.import.maven.enabled": true,
+  "java.configuration.maven.userSettings": "C:\\Users\\user\\.m2\\settings.xml",
+  "java.configuration.maven.defaultMojoExecution.pluginExecutionId": true,
+  "[java]": {
+    "editor.defaultFormatter": "redhat.java"
+  },
+  "java.errors.incompleteClasspath.severity": "ignore",
+  "java.saveActions.organizeImports": true,
+  "java.semanticHighlighting.enabled": true,
+  "redhat.java.imports.gradle.wrapper.checksums": ""
+}
