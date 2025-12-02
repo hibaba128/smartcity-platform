@@ -1,0 +1,7 @@
+{
+  "name": "service-profils-graphql",
+  "version": "0.0.0",
+  "description": "TODO: GraphQL profiles service",
+  "main": "index.js",
+  "scripts": {}
+}
