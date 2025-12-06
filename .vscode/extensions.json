@@ -3,6 +3,7 @@
     "redhat.java",
     "redhat.vscode-xml",
     "vscjava.vscode-maven",
-    "vscjava.vscode-java-debug"
+    "vscjava.vscode-java-debug",
+    "google.geminicodeassist"
   ]
 }

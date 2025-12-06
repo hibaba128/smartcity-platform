@@ -1,0 +1,4 @@
+com\smartcity\profil\GraphQLProvider$Profil.class
+com\smartcity\profil\GraphQLProvider.class
+com\smartcity\profil\ServiceProfilsApplication.class
+com\smartcity\profil\controllers\ProfilController.class

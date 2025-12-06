@@ -1,0 +1,12 @@
+type Query {
+    profil(id: ID!): Profil
+    profils: [Profil!]!
+}
+
+type Profil {
+    id: ID!
+    nom: String!
+    prenom: String!
+    preferencesTransport: [String!]
+    alerteSante: Boolean!
+}
