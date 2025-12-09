@@ -1,2 +1,4 @@
 com\smartcity\orchestrateur\OrchestrateurApplication.class
 com\smartcity\orchestrateur\OrchestrateurController.class
+GetAQIResponse.class
+GetAQIRequest.class

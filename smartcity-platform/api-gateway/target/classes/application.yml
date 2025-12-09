@@ -1,0 +1,77 @@
+server:
+  port: 8080 
+
+spring:
+  application:
+    name: api-gateway
+  cloud:
+    gateway:
+      routes:
+        
+        # 1. ROUTE VERS L'ORCHESTRATEUR (Workflow)
+        # Reçoit : /api/trajet-intelligent?quartier=centre
+        # Envoie à Orchestrateur : /trajet-intelligent?quartier=centre
+        - id: orchestrateur_route
+          uri: http://orchestrateur-service:8080 
+          predicates:
+            Path=/api/trajet-intelligent**
+          filters:
+            # Conserve seulement /trajet-intelligent
+            - RewritePath=/api/(?<segment>.*), /${segment}
+        
+        # 2. ROUTE VERS LE SERVICE MOBILITÉ (REST)
+        # Reçoit : /api/mobilite/horaires
+        # Envoie à Mobilité : /mobilite/horaires
+        - id: mobilite_route
+          uri: http://mobilite-service:8080 
+          predicates:
+            - Path=/api/mobilite/horaires
+          # Retire '/api/' mais conserve le path interne /mobilite/horaires
+          filters:
+            - RewritePath=/api/(?<segment>.*), /${segment}
+
+        # 3. ROUTE VERS LE SERVICE QUALITÉ AIR (SOAP)
+        # Reçoit : /api/qualiteair/ws/airquality.wsdl
+        # Envoie à Qualité Air : /ws/airquality.wsdl
+        - id: qualiteair_route
+          uri: http://qualiteair-service:8080 
+          predicates:
+            - Path=/api/qualiteair/**
+          # Retire '/api/qualiteair' pour que le service reçoive la suite
+          filters:
+            - RewritePath=/api/qualiteair/(?<segment>.*), /${segment} 
+            
+        # 4. ROUTE VERS LE SERVICE PROFILS (GraphQL)
+        # Reçoit : /api/profils/graphql ou /api/profils/test
+        # Envoie à Profils : /profils/graphql ou /profils/test
+        - id: profils_route
+          uri: http://profils-service:4000 
+          predicates:
+            - Path=/api/profils/**
+          # Retire '/api/' pour que le service reçoive /profils/...
+          filters:
+            - RewritePath=/api/(?<segment>.*), /${segment}
+            
+        # 5. ROUTE VERS LE SERVICE URGENCES (gRPC)
+        # Cetted route doit être commentée car le service n'est pas HTTP/REST sur 8080.
+        # - id: urgences_route
+        #   uri: http://urgences-service:8080 
+        #   predicates:
+        #     - Path=/api/urgences/**
+        #   filters:
+        #     - RewritePath=/api/(?<segment>.*), /${segment}
+
+      # **********************************************
+      # CORRECTION CRUCIALE : Configuration CORS
+      # Autorise le client web sur le port 3000 à accéder à la Gateway sur 8085
+      # **********************************************
+      globalcors:
+        cors-configurations:
+          '[/**]':
+            allowedOrigins:
+              - "http://localhost:3000"  # Autoriser l'origine du client web
+            allowedMethods:
+              - GET
+              - POST
+            allowedHeaders: "*"
+            allowCredentials: true pk que le graphql marche

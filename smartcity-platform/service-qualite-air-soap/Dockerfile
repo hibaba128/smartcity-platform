@@ -1,20 +1,19 @@
-# STAGE 1: BUILDER - Image complète pour compiler le projet
 FROM eclipse-temurin:17-jdk-focal AS builder
 WORKDIR /app
 COPY pom.xml .
+RUN mvn dependency:go-offline -B
 COPY src ./src
-RUN mvn dependency:go-offline
+RUN mvn clean package -DskipTests -B
+
+FROM maven:3.9-eclipse-temurin-17 AS builder
+WORKDIR /app
+COPY pom.xml .
+COPY src ./src
 RUN mvn clean package -DskipTests
 
-# STAGE 2: RUNNER - Image minimale pour l'exécution de l'application
+# STAGE 2: RUNNER
 FROM eclipse-temurin:17-jre-focal
-
 WORKDIR /app
-
-# Copie du fichier JAR compilé depuis l'étage de build
-COPY --from=builder /app/target/service-qualite-air-soap-1.0.0.jar app.jar
-
+COPY --from=builder /app/target/*.jar app.jar
 EXPOSE 8082
-
-# Commande pour exécuter l'application
 ENTRYPOINT ["java", "-jar", "app.jar"]

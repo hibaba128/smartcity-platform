@@ -1,32 +1,185 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="fr">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Smart City Platform</title>
-    <!-- TODO: Add CSS and JS files -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SmartCity Platform - Client Web Gateway</title>
+    <meta name="description" content="Plateforme interopérable de services urbains (REST, SOAP, GraphQL, gRPC)">
+    <style>
+        body {
+            font-family: 'Segoe UI', Arial, sans-serif;
+            background: linear-gradient(135deg, #e0f7fa, #80deea);
+            margin: 0;
+            padding: 40px 20px;
+            min-height: 100vh;
+            color: #003366;
+        }
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            background: white;
+            padding: 40px;
+            border-radius: 16px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.15);
+        }
+        h1 { color: #0066cc; font-size: 2.8em; margin-bottom: 10px; }
+        .subtitle { color: #0077cc; font-size: 1.4em; margin-bottom: 30px; }
+        .status {
+            font-size: 28px;
+            font-weight: bold;
+            color: #00c853;
+            background: #e8f5e9;
+            padding: 15px;
+            border-radius: 10px;
+            margin: 30px 0;
+            text-align: center;
+        }
+        .services { 
+            display: grid; 
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); 
+            gap: 20px; 
+            margin-top: 40px; 
+        }
+        .service {
+            background: #f5f9ff;
+            padding: 20px;
+            border-radius: 12px;
+            border-left: 6px solid #0066cc;
+            text-align: left;
+        }
+        .service h3 { margin: 0 0 12px 0; color: #0044aa; }
+        button {
+            padding: 10px 15px;
+            background-color: #0066cc;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: background-color 0.2s;
+            margin-top: 10px;
+        }
+        button:hover { background-color: #0056b3; }
+        pre { 
+            background: #e9ecef; 
+            padding: 15px; 
+            border-radius: 8px; 
+            margin-top: 15px; 
+            overflow-x: auto; 
+            white-space: pre-wrap;
+            word-wrap: break-word;
+            min-height: 50px;
+        }
+        .endpoint-link { font-size: 0.9em; color: #555; display: block; margin-bottom: 10px; }
+        footer { margin-top: 60px; color: #666; font-size: 0.9em; text-align: center; }
+    </style>
 </head>
 <body>
-    <h1>Welcome to Smart City Platform</h1>
+    <div class="container">
+        <h1>SmartCity Platform</h1>
+        <p class="subtitle">Validation de l'interopérabilité via l'**API Gateway** (Port 8085)</p>
 
-    <section>
-        <h2>Mobilité</h2>
-        <!-- TODO: Add UI to display transport schedules and availability -->
-    </section>
+        <div class="status">
+            TESTER L'INTÉGRATION DU WORKFLOW ET DES SERVICES CI-DESSOUS
+        </div>
 
-    <section>
-        <h2>Qualité de l'air</h2>
-        <!-- TODO: Add UI to display air quality information -->
-    </section>
+        <div class="services">
+            <div class="service">
+                <h3>1. 🧭 Orchestrateur Métier (Workflow)</h3>
+                <span class="endpoint-link">Route Gateway : /api/trajet-intelligent</span>
+                <label for="quartier">Quartier :</label>
+                <input type="text" id="quartier" value="centre" style="padding: 8px; border: 1px solid #ccc; border-radius: 5px;">
+                <button onclick="planifierTrajet()">Planifier Trajet</button>
+                <pre id="resultat-orchestrateur">Résultat agrégé (Mobilité, Qualité Air, Recommandation)...</pre>
+            </div>
 
-    <section>
-        <h2>Urgences</h2>
-        <!-- TODO: Add UI to send or check emergency alerts -->
-    </section>
+            <div class="service">
+                <h3>2. 🚌 REST — Mobilité</h3>
+                <span class="endpoint-link">Route Gateway : /api/mobilite/horaires</span>
+                <button onclick="getMobilityData()">Consulter Horaires</button>
+                <pre id="resultat-mobilite">Horaires du service Mobilité...</pre>
+            </div>
 
-    <section>
-        <h2>Profils</h2>
-        <!-- TODO: Add UI to query profiles via GraphQL -->
-    </section>
+            <div class="service">
+                <h3>3. 👤 GraphQL — Profils Citoyens</h3>
+                <span class="endpoint-link">Route Gateway : /api/profils/test</span>
+                <button onclick="getProfilsTest()">Tester Route Profils</button>
+                <pre id="resultat-profils">Test de l'endpoint Profiles...</pre>
+            </div>
+
+            <div class="service">
+                <h3>4. ☁️ SOAP — Qualité Air</h3>
+                <span class="endpoint-link">Route Gateway : /api/qualiteair/ws/airquality.wsdl</span>
+                <button onclick="getQualiteAirWSDL()">Afficher WSDL</button>
+                <pre id="resultat-qualiteair">Document WSDL XML (schéma)...</pre>
+            </div>
+
+            <div class="service">
+                <h3>5. 🚑 gRPC — Urgences Santé</h3>
+                <p>Service non routable par la Gateway HTTP.</p>
+                <span class="endpoint-link">Test direct gRPC : localhost:50051</span>
+                <pre>Utiliser grpcurl pour le test (voir documentation)</pre>
+            </div>
+        </div>
+
+        <footer>
+            Architecture microservices 100 % conteneurisée — Validation de l'interopérabilité SOC.
+        </footer>
+    </div>
+
+    <script>
+        const GATEWAY_URL = 'http://localhost:8085/api';
+
+        async function fetchData(endpoint, resultElementId) {
+            const url = `${GATEWAY_URL}${endpoint}`;
+            const resultElement = document.getElementById(resultElementId);
+            resultElement.innerText = 'Chargement...';
+
+            try {
+                const response = await fetch(url);
+                
+                if (!response.ok) {
+                    throw new Error(`HTTP ${response.status} (${response.statusText})`);
+                }
+                
+                // Tente de parser en JSON (pour Mobilité, Orchestrateur, Profils)
+                const contentType = response.headers.get("content-type");
+                if (contentType && contentType.includes("application/json")) {
+                    const data = await response.json();
+                    resultElement.innerText = JSON.stringify(data, null, 2);
+                } 
+                // Affiche le texte brut (pour le WSDL XML)
+                else {
+                    const text = await response.text();
+                    resultElement.innerText = text.substring(0, 1000) + (text.length > 1000 ? '...' : ''); // Limiter pour l'affichage
+                }
+
+            } catch (error) {
+                resultElement.innerText = `ERREUR: ${error.message}\nVerifiez: Docker, API Gateway (8085) et le service cible.`;
+                console.error("Erreur de Fetch:", error);
+            }
+        }
+
+        // 1. Orchestrateur (Workflow)
+        function planifierTrajet() {
+            const quartier = document.getElementById('quartier').value;
+            fetchData(`/trajet-intelligent?quartier=${quartier}`, 'resultat-orchestrateur');
+        }
+
+        // 2. Mobilité (REST)
+        function getMobilityData() {
+            fetchData(`/mobilite/horaires`, 'resultat-mobilite');
+        }
+
+        // 3. Profils (GraphQL - Test de la Route)
+        function getProfilsTest() {
+            fetchData(`/profils/test`, 'resultat-profils');
+        }
+
+        // 4. Qualité Air (SOAP - WSDL)
+        function getQualiteAirWSDL() {
+            fetchData(`/qualiteair/ws/airquality.wsdl`, 'resultat-qualiteair');
+        }
+    </script>
 </body>
 </html>

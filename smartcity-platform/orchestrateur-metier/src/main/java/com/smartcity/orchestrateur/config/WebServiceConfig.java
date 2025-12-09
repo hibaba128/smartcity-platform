@@ -8,13 +8,14 @@ import org.springframework.ws.soap.saaj.SaajSoapMessageFactory;
 @Configuration
 public class WebServiceConfig {
 
-@Bean
-    public WebServiceTemplate webServiceTemplate() throws Exception {
+    @Bean
+    public WebServiceTemplate webServiceTemplate() {
         SaajSoapMessageFactory messageFactory = new SaajSoapMessageFactory();
-        messageFactory.afterPropertiesSet(); // ← LIGNE MAGIQUE
+        messageFactory.afterPropertiesSet();
 
         WebServiceTemplate template = new WebServiceTemplate(messageFactory);
-        template.setDefaultUri("http://localhost:8082/ws"); // ou "http://service-qualite-air:8082/ws" en Docker
+template.setDefaultUri("http://localhost:8082/ws/airquality");
+        // ON NE MET PLUS DE MARSHALLER → on envoie du XML brut
         return template;
     }
 }
