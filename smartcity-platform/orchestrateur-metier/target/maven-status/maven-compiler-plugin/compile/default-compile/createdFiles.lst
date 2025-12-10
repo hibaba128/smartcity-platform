@@ -1,4 +1,13 @@
 com\smartcity\orchestrateur\OrchestrateurApplication.class
+com\smartcity\orchestrateur\schema\GetAQIResponse.class
+com\smartcity\orchestrateur\schema\package-info.class
+com\smartcity\orchestrateur\repository\TrajetLogRepository.class
 com\smartcity\orchestrateur\OrchestrateurController.class
 GetAQIResponse.class
+com\smartcity\orchestrateur\entity\AlerteUrgence.class
+com\smartcity\orchestrateur\schema\ObjectFactory.class
+com\smartcity\orchestrateur\config\WebServiceConfig.class
+com\smartcity\orchestrateur\schema\GetAQIRequest.class
+com\smartcity\orchestrateur\entity\TrajetLog.class
 GetAQIRequest.class
+com\smartcity\orchestrateur\repository\AlerteUrgenceRepository.class

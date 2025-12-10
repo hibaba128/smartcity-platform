@@ -3,10 +3,12 @@ com\smartcity\qualiteair\schema\GetAQIResponse.class
 schema\GetAQIRequest.class
 schema\ObjectFactory.class
 com\smartcity\qualiteair\config\WebServiceConfig.class
+com\smartcity\qualiteair\entity\AirQuality.class
 schema\package-info.class
 com\smartcity\qualiteair\endpoint\AirQualityEndpoint.class
 schema\GetAQIResponse.class
 com\smartcity\qualiteair\schema\GetAQIRequest.class
 com\smartcity\qualiteair\schema\ObjectFactory.class
 com\smartcity\qualiteair\QualiteAirEndpoint.class
+com\smartcity\qualiteair\repository\AirQualityRepository.class
 com\smartcity\qualiteair\QualiteAirApplication.class

@@ -10,6 +10,22 @@ services:
 
 
 
+  db-h2:
+    build: ./db-h2
+    container_name: h2-db
+    ports:
+      - "1521:1521"  # TCP
+      - "8083:8082"  # Console Web
+    volumes:
+      - h2-data:/opt/h2-data
+    networks:
+      - smartcity-net
+    healthcheck:
+      test: ["CMD", "java", "-cp", "/opt/h2.jar", "org.h2.tools.Shell", "-url", "jdbc:h2:tcp://localhost:1521/smartcity", "-user", "sa", "-password", "", "-sql", "SELECT 1"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
   service-mobilite:
 
 
@@ -258,7 +274,7 @@ services:
 
 
 
-      dockerfile: Dockerfile.client
+      dockerfile: Dockerfile
 
 
 
@@ -303,3 +319,6 @@ networks:
 
 
     driver: bridge 
+
+volumes:
+  h2-data:

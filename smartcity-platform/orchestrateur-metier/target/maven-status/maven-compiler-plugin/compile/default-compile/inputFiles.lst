@@ -1,9 +1,13 @@
-C:\Users\user\Desktop\soc\smartcity-platform\orchestrateur-metier\src\main\java\com\smartcity\orchestrateur\config\WebServiceConfig.java
 C:\Users\user\Desktop\soc\smartcity-platform\orchestrateur-metier\src\main\java\com\smartcity\orchestrateur\schema\GetAQIRequest.java
-C:\Users\user\Desktop\soc\smartcity-platform\orchestrateur-metier\src\main\java\com\smartcity\orchestrateur\schema\package-info.java
-C:\Users\user\Desktop\soc\smartcity-platform\orchestrateur-metier\src\main\java\com\smartcity\orchestrateur\schema\GetAQIResponse.java
+C:\Users\user\Desktop\soc\smartcity-platform\orchestrateur-metier\src\main\java\com\smartcity\orchestrateur\entity\TrajetLog.java
 C:\Users\user\Desktop\soc\smartcity-platform\orchestrateur-metier\src\main\java\com\smartcity\orchestrateur\OrchestrateurController.java
 C:\Users\user\Desktop\soc\smartcity-platform\orchestrateur-metier\src\main\java\com\smartcity\orchestrateur\schema\jaxb.index\GetAQIResponse.java
-C:\Users\user\Desktop\soc\smartcity-platform\orchestrateur-metier\src\main\java\com\smartcity\orchestrateur\OrchestrateurApplication.java
+C:\Users\user\Desktop\soc\smartcity-platform\orchestrateur-metier\src\main\java\com\smartcity\orchestrateur\entity\AlerteUrgence.java
 C:\Users\user\Desktop\soc\smartcity-platform\orchestrateur-metier\src\main\java\com\smartcity\orchestrateur\schema\jaxb.index\GetAQIRequest.java
 C:\Users\user\Desktop\soc\smartcity-platform\orchestrateur-metier\src\main\java\com\smartcity\orchestrateur\schema\ObjectFactory.java
+C:\Users\user\Desktop\soc\smartcity-platform\orchestrateur-metier\src\main\java\com\smartcity\orchestrateur\config\WebServiceConfig.java
+C:\Users\user\Desktop\soc\smartcity-platform\orchestrateur-metier\src\main\java\com\smartcity\orchestrateur\repository\AlerteUrgenceRepository.java
+C:\Users\user\Desktop\soc\smartcity-platform\orchestrateur-metier\src\main\java\com\smartcity\orchestrateur\schema\package-info.java
+C:\Users\user\Desktop\soc\smartcity-platform\orchestrateur-metier\src\main\java\com\smartcity\orchestrateur\schema\GetAQIResponse.java
+C:\Users\user\Desktop\soc\smartcity-platform\orchestrateur-metier\src\main\java\com\smartcity\orchestrateur\repository\TrajetLogRepository.java
+C:\Users\user\Desktop\soc\smartcity-platform\orchestrateur-metier\src\main\java\com\smartcity\orchestrateur\OrchestrateurApplication.java
