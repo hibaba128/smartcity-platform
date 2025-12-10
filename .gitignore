@@ -1,0 +1,20 @@
+# Fichiers compilés et dossiers Maven
+target/
+*.class
+*.jar
+
+# Bases de données locales
+*.mv.db
+*.trace.db
+*.h2.db
+
+# IDE et OS
+*.idea/
+*.vscode/
+*.DS_Store
+Thumbs.db
+
+# Node / Frontend
+node_modules/
+dist/
+.env

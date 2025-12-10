@@ -1,0 +1,37 @@
+syntax = "proto3";
+
+package urgence;
+
+message AlertRequest {
+  string type = 1;
+  double latitude = 2;
+  double longitude = 3;
+  int32 severity = 4;
+  string description = 5;
+}
+
+message AlertResponse {
+  string alertId = 1;
+  string message = 2;
+  int32 estimatedTime = 3;
+}
+
+message StatusRequest {
+  string alertId = 1;
+}
+
+message StatusResponse {
+  string status = 1;
+}
+
+message AlertStream {
+  string alertId = 1;
+  string type = 2;
+  string status = 3;
+}
+
+service UrgenceService {
+  rpc CreateAlert(AlertRequest) returns (AlertResponse);
+  rpc GetAlertStatus(StatusRequest) returns (StatusResponse);
+  rpc ListenAlerts(StatusRequest) returns (stream AlertStream);
+}

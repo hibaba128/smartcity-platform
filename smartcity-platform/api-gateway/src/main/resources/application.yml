@@ -34,7 +34,7 @@ spring:
           predicates:
             - Path=/api/profils/**
           filters:
-            - RewritePath=/api/profils/(?<segment>.*), /${segment} 
+            - RewritePath=/api/profils/(?<segment>.*), /profils/${segment}
 
       # **********************************************
       # CORRECTION CRUCIALE : Configuration CORS
